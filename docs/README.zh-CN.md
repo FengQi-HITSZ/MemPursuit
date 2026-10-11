@@ -24,22 +24,6 @@ cp .env.example .env
 
 在 `.env` 中填写 `OPENAI_API_KEY`。默认使用 GPT-4o-mini 提取记忆、生成回答和评分，使用 `text-embedding-3-small` 生成 1536 维嵌入。通过 `OPENAI_BASE_URL` 配置兼容 OpenAI 的服务，也可用 `ANSWER_*`、`JUDGE_*` 变量分别配置回答和裁判模型。
 
-## 独立使用算法
-
-仅使用选择算法时，安装 `python -m pip install -e .` 即可。
-
-```python
-import numpy as np
-from mempursuit import select
-
-query = np.array([1.0, 0.2, 0.3])
-candidates = np.array([[1., 0., 0.], [0., 1., 0.], [0., 0., 1.]])
-result = select(query, candidates, budget=2, backend="numpy")
-print(result.selected_indices)
-```
-
-结果索引按选择顺序排列。安装 `.[fast]` 后可使用 `backend="numba"` 加速。
-
 ## 下载数据集
 
 ```bash

@@ -22,26 +22,6 @@ cp .env.example .env
 
 Set `OPENAI_API_KEY` in `.env`. Memory extraction defaults to `gpt-4o-mini`; embeddings use `text-embedding-3-small` with 1,536 dimensions. Set `OPENAI_BASE_URL` to use another OpenAI-compatible endpoint. Answer and judge models, endpoints and credentials can be configured separately with the `ANSWER_*` and `JUDGE_*` variables in `.env.example`.
 
-## Standalone selection
-
-The standalone algorithm requires only NumPy:
-
-```bash
-python -m pip install -e .
-```
-
-```python
-import numpy as np
-from mempursuit import select
-
-query = np.array([1.0, 0.2, 0.3])
-candidates = np.array([[1., 0., 0.], [0., 1., 0.], [0., 0., 1.]])
-result = select(query, candidates, budget=2, backend="numpy")
-print(result.selected_indices)  # indices in pursuit order
-```
-
-Install `.[fast]` and use `backend="numba"` for the accelerated implementation. See [examples/basic.py](examples/basic.py) for a complete example.
-
 ## Datasets
 
 Run benchmark commands from the repository root. Download the datasets with:
