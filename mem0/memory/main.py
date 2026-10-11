@@ -1082,7 +1082,7 @@ class Memory(MemoryBase):
                 try:
                     embed_map[text] = self.embedding_model.embed(text, "add")
                 except Exception as e:
-                    logger.warning(f"Failed to embed memory text: {e}")
+                    raise RuntimeError("Failed to embed an extracted memory") from e
 
         # Phase 4: Per-memory CPU processing + Phase 5: Hash dedup
         # Build set of existing hashes for dedup
@@ -1142,7 +1142,7 @@ class Memory(MemoryBase):
                 try:
                     self.vector_store.insert(vectors=[vec], ids=[mid], payloads=[pay])
                 except Exception as e:
-                    logger.error(f"Failed to insert memory {mid}: {e}")
+                    raise RuntimeError("Failed to persist an extracted memory") from e
 
         # Batch history
         history_records = [

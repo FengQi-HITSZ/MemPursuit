@@ -81,8 +81,6 @@ LongMemEval-S and BEAM checkpoint successful message batches, completed scopes, 
 
 Use saved retrieval to evaluate another answer model on the same evidence. Remote model versions and sampling can affect memory extraction, generated answers and judgments, so record model identifiers and configuration alongside results.
 
-For existing Qdrant collections, `scripts/backfill_bm25.py` can audit BM25 sparse-vector coverage. It runs in dry-run mode unless `--write` is supplied.
-
 ## Adaptive selection
 
 Use `configs/adaptive.yaml` with LoCoMo `--adaptive-context` to stop according to residual improvement:
