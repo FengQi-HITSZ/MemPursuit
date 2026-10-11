@@ -6,7 +6,7 @@ MemPursuit 使用 simplex 约束的全校正 Sparse OMP，从候选记忆中逐�
 
 项目提供独立的 NumPy/Numba 实现、基于 Mem0 的记忆系统，以及 LoCoMo、LongMemEval-S 和 BEAM-500K 的完整评估流程。
 
-[English](../README.md) · [评估协议](experiments.md) · [测试指南](testing.md) · [许可证](../NOTICE)
+[English](../README.md) · [评估协议](experiments.md) · [许可证](../NOTICE)
 
 ## 安装
 
@@ -114,7 +114,7 @@ python -m benchmarks.beam.run --project-name beam-mempursuit \
 
 添加 `--resume` 可继续中断的任务。续跑记忆构建时，需要同时保留 Qdrant 数据、SQLite 历史数据库和结果目录。分开执行检索与评估、复用检索结果及切换回答模型的方法见 [英文指南](../README.md#resume-and-reuse-retrieval)。
 
-评估协议说明了各数据集的检索阈值、上下文排序和评分方式。算法延迟测量及开发测试命令见 [英文指南](../README.md#adaptive-selection-and-acceleration) 和 [测试指南](testing.md)。
+评估协议说明了各数据集的检索阈值、上下文排序和评分方式。算法延迟测量命令见 [英文指南](../README.md#adaptive-selection-and-acceleration)。
 
 ## 许可证
 

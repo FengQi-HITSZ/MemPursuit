@@ -22,18 +22,12 @@ pipeline = [
   "scipy>=1.10,<2", "datasets>=3,<5", "pyarrow>=17,<24",
 ]
 local-embeddings = ["sentence-transformers>=5,<6"]
-test = ["pytest>=8,<10", "pytest-asyncio>=0.23,<2", "pytest-mock>=3,<4", "ruff>=0.9,<1"]
 
 [tool.setuptools]
 license-files = ["LICENSE", "NOTICE", "licenses/*.txt"]
 
 [tool.setuptools.packages.find]
 include = ["mempursuit*", "mem0*", "benchmarks*", "server*", "scripts*"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-asyncio_mode = "auto"
-addopts = "--import-mode=importlib"
 
 [tool.ruff]
 line-length = 120

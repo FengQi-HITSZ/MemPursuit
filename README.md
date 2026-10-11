@@ -6,7 +6,7 @@ MemPursuit selects complementary memories through simplex-constrained, fully cor
 
 The repository provides a standalone NumPy/Numba implementation, a Mem0-based memory pipeline, and end-to-end evaluation on **LoCoMo, LongMemEval-S, and BEAM-500K**.
 
-[中文指南](docs/README.zh-CN.md) · [Evaluation protocol](docs/experiments.md) · [Testing](docs/testing.md) · [Licenses](NOTICE)
+[中文指南](docs/README.zh-CN.md) · [Evaluation protocol](docs/experiments.md) · [Licenses](NOTICE)
 
 ## Installation
 
@@ -168,9 +168,6 @@ The default input is synthetic. Supply `--input embeddings.npz` with arrays `que
 | `benchmarks/locomo/` | LoCoMo evaluation |
 | `benchmarks/pipeline/` | LongMemEval/BEAM ingestion, retrieval and evaluation |
 | `configs/` | Selection and memory-service configurations |
-| `tests/` | Algorithm and pipeline tests |
-
-For development, install `.[pipeline,fast,test]` and follow the [testing guide](docs/testing.md).
 
 ## License
 
