@@ -1049,8 +1049,7 @@ class Memory(MemoryBase):
                 response_format={"type": "json_object"},
             )
         except Exception as e:
-            logger.error(f"LLM extraction failed: {e}")
-            return []
+            raise RuntimeError("LLM memory extraction failed") from e
 
         # Parse response
         try:
@@ -1064,8 +1063,7 @@ class Memory(MemoryBase):
                     extracted_json = extract_json(response)
                     extracted_memories = json.loads(extracted_json, strict=False).get("memory", [])
         except Exception as e:
-            logger.error(f"Error parsing extraction response: {e}")
-            extracted_memories = []
+            raise RuntimeError("Could not parse the memory extraction response") from e
 
         if not extracted_memories:
             # Save messages even if nothing extracted

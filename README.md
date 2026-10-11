@@ -10,9 +10,13 @@ The repository provides a standalone NumPy/Numba implementation, a Mem0-based me
 
 ## Installation
 
-Use Python 3.10+ and a fresh environment. This repository provides the `mem0` Python namespace; install it in an environment without `mem0ai` to avoid package conflicts.
+Use Python 3.10+, Git and Docker with the Compose v2 plugin. The default setup runs locally on CPU and calls external APIs for memory extraction, embeddings, answers and judging. It requires internet access and API credentials with sufficient quota.
+
+Use a fresh Python environment. This repository provides the `mem0` Python namespace; install it in an environment without `mem0ai` to avoid package conflicts.
 
 ```bash
+git clone https://github.com/FengQi-HITSZ/MemPursuit.git
+cd MemPursuit
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[pipeline,fast]'
@@ -37,6 +41,8 @@ python -m scripts.download_datasets locomo longmemeval beam
 | BEAM | 500K | 35 conversations, 700 questions |
 
 The downloader saves datasets under `datasets/`. Dataset and model files retain their upstream licenses.
+
+The paper's main comparison uses **K=50**. The commands below evaluate K=10/20/50/200; use the K=50 outputs when comparing with the [reported results](docs/experiments.md#datasets-and-results). Rebuilding memories and rerunning model APIs can produce different scores because extraction and generation are not deterministic and hosted model versions can change.
 
 ## LoCoMo
 

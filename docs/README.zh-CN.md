@@ -10,11 +10,15 @@ MemPursuit 使用 simplex 约束的全校正 Sparse OMP，从候选记忆中逐�
 
 ## 安装
 
-需要 Python 3.10 或更新版本。建议使用独立环境；本项目提供 `mem0` 命名空间，请避免在同一环境中同时安装 `mem0ai`。
+需要 Python 3.10 或更新版本、Git，以及带 Compose v2 插件的 Docker。默认配置在本地使用 CPU，通过外部 API 提取记忆、生成嵌入、回答和评分，需要联网并准备有足够额度的 API 凭据。
 
-在项目根目录执行：
+建议使用独立 Python 环境；本项目提供 `mem0` 命名空间，请避免在同一环境中同时安装 `mem0ai`。
+
+克隆仓库并安装：
 
 ```bash
+git clone https://github.com/FengQi-HITSZ/MemPursuit.git
+cd MemPursuit
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[pipeline,fast]'
@@ -37,6 +41,8 @@ python -m scripts.download_datasets locomo longmemeval beam
 | BEAM | 500K | 35 个对话，700 道题 | 同一 session 中相邻的 2 条消息 |
 
 数据保存在 `datasets/`。两条消息组成一次提取输入，LLM 可从中生成多条记忆；最后不足两条时单独处理，不跨 session 配对。
+
+论文主表使用 **K=50**。下列命令默认评估 K=10/20/50/200，对照[论文结果](experiments.md#datasets-and-results)时读取 K=50 的输出。重新构建记忆和调用模型可能产生分数波动，因为记忆提取和生成具有非确定性，托管模型版本也可能变化。
 
 ## 运行 LoCoMo
 

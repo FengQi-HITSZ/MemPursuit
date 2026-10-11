@@ -241,6 +241,10 @@ async def ingest_conversation(
     key = str(conv_idx)
     (is_done, cp_data) = checkpoint.is_complete(key, CHUNK_SIZE)
     if is_done and cp_data:
+        if cp_data.get("total_chunks_failed", 0):
+            raise RuntimeError(
+                "This conversation checkpoint contains failed ingestion batches; use a new project name"
+            )
         chunks_done = cp_data.get("total_chunks_processed", 0)
         user_id = cp_data.get("user_id", user_id)
         logger.info("Conversation %d already ingested (user_id=%s, %d chunks)", conv_idx, user_id, chunks_done)
@@ -328,6 +332,10 @@ async def ingest_conversation(
             else:
                 total_failed += 1
                 logger.warning("Ingestion failed: conv %d %s chunk %d", conv_idx, session_key, chunk_idx)
+                pbar.close()
+                if debug_file:
+                    debug_file.close()
+                return (False, user_id, total_processed)
             chunks_already_done.add(chunk_key)
             checkpoint.save_progress(
                 key,
@@ -1428,12 +1436,12 @@ async def async_main() -> None:
                 conv_idx, entry, mem0, logger, run_id, args.project_name, output_dir, shutdown, debug=args.debug
             )
             if not success:
-                logger.error("Ingestion failed for conversation %d", conv_idx)
+                raise RuntimeError(
+                    f"Ingestion failed for conversation {conv_idx}; fix the memory service and rerun with --resume"
+                )
             if shutdown.requested:
                 return
             user_profile = None
-            if args.user_profile and (not False):
-                user_profile = await mem0.get_user_profile(user_id)
             sorted_sessions = get_sorted_sessions(conversation)
             ref_date_human = None
             if sorted_sessions:
