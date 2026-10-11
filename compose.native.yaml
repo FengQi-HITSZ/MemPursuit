@@ -1,0 +1,65 @@
+# Four-service deployment for LongMemEval-S and BEAM. Start separately from compose.yaml.
+name: mempursuit-native
+x-memory: &memory
+  build: .
+  depends_on: [qdrant]
+  env_file: .env
+  restart: unless-stopped
+x-environment: &environment
+  QDRANT_HOST: qdrant
+  QDRANT_PORT: "6333"
+  MEM0_CONFIG_PATH: /app/configs/active.yaml
+  HISTORY_DB_PATH: /state/history.db
+  MEM0_DIR: /state
+  DISABLE_DESTRUCTIVE_ENDPOINTS: "true"
+  OPENBLAS_NUM_THREADS: "4"
+  OMP_NUM_THREADS: "4"
+  MKL_NUM_THREADS: "4"
+  NUMEXPR_NUM_THREADS: "4"
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.15.4
+    volumes: [qdrant_data:/qdrant/storage]
+    restart: unless-stopped
+  memory1:
+    <<: *memory
+    environment:
+      <<: *environment
+      COLLECTION_NAME: mempursuit_native_s1
+    ports: ["127.0.0.1:8891:8000"]
+    volumes:
+      - ./configs/mempursuit.yaml:/app/configs/active.yaml:ro
+      - history1:/state
+  memory2:
+    <<: *memory
+    environment:
+      <<: *environment
+      COLLECTION_NAME: mempursuit_native_s2
+    ports: ["127.0.0.1:8892:8000"]
+    volumes:
+      - ./configs/mempursuit.yaml:/app/configs/active.yaml:ro
+      - history2:/state
+  memory3:
+    <<: *memory
+    environment:
+      <<: *environment
+      COLLECTION_NAME: mempursuit_native_s3
+    ports: ["127.0.0.1:8893:8000"]
+    volumes:
+      - ./configs/mempursuit.yaml:/app/configs/active.yaml:ro
+      - history3:/state
+  memory4:
+    <<: *memory
+    environment:
+      <<: *environment
+      COLLECTION_NAME: mempursuit_native_s4
+    ports: ["127.0.0.1:8894:8000"]
+    volumes:
+      - ./configs/mempursuit.yaml:/app/configs/active.yaml:ro
+      - history4:/state
+volumes:
+  qdrant_data:
+  history1:
+  history2:
+  history3:
+  history4:

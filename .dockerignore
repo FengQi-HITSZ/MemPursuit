@@ -1,0 +1,15 @@
+.git
+.env
+.env.*
+__pycache__
+**/__pycache__
+.pytest_cache
+.ruff_cache
+.mempursuit
+.cache
+results
+datasets
+logs
+build
+dist
+*.egg-info

@@ -1,0 +1,17 @@
+MemPursuit
+
+The mem0/ components contain modified portions of Mem0:
+https://github.com/mem0ai/mem0
+Licensed under Apache License 2.0; see LICENSE.
+
+Benchmark infrastructure contains modified portions of memory-benchmarks,
+licensed under Apache License 2.0. See
+licenses/memory-benchmarks-Apache-2.0.txt.
+
+benchmarks/pipeline/beam_official.py adapts BEAM prompt templates and metrics:
+https://github.com/mohammadtavakoli78/BEAM
+Upstream revision: b2da22eac88bb0874c64665f13457eb99835774a
+Copyright (c) 2025 Mohammad Tavakoli. MIT License; see licenses/BEAM-MIT.txt.
+
+Dataset and model files are downloaded separately and retain their own licenses
+and usage terms.

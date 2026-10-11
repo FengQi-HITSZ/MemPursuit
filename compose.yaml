@@ -1,0 +1,37 @@
+name: mempursuit
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.15.4
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+  memory:
+    build: .
+    depends_on:
+      - qdrant
+    env_file: .env
+    environment:
+      QDRANT_HOST: qdrant
+      QDRANT_PORT: "6333"
+      MEM0_CONFIG_PATH: /app/configs/active.yaml
+      HISTORY_DB_PATH: /state/history.db
+      MEM0_DIR: /state
+      DISABLE_DESTRUCTIVE_ENDPOINTS: "true"
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+    ports:
+      - "127.0.0.1:${MEM0_PORT:-8889}:8000"
+    volumes:
+      - ${MEM0_CONFIG_FILE:-./configs/mempursuit.yaml}:/app/configs/active.yaml:ro
+      - history:/state
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+    restart: unless-stopped
+volumes:
+  qdrant_data:
+  history:

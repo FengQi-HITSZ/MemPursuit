@@ -1,0 +1,36 @@
+version: v1.1
+llm:
+  provider: openai
+  config:
+    model: gpt-4o-mini
+    temperature: 0.1
+embedder:
+  provider: openai
+  config:
+    model: text-embedding-3-small
+vector_store:
+  provider: qdrant
+  config:
+    host: 127.0.0.1
+    port: 6333
+    collection_name: mempursuit
+    embedding_model_dims: 1536
+    dense_vector_cache_size: 8192
+    bm25_required: true
+retrieval:
+  semantic_score_mode: embedding
+  enable_bm25: true
+  enable_entity_boost: true
+reranker:
+  provider: sparse_omp
+  config:
+    constraint: simplex
+    backend: numpy
+    normalize_vectors: true
+    ridge: 1.0e-10
+    negative_tolerance: 1.0e-10
+    candidate_pool_size: 200
+    max_support: 200
+    max_concurrency: 2
+    early_stopping: false
+history_db_path: .mempursuit/history.db

@@ -1,0 +1,6 @@
+include README.md NOTICE LICENSE .env.example Dockerfile compose.yaml compose.native.yaml
+recursive-include configs *.yaml
+recursive-include docs *.md
+recursive-include licenses *.txt
+recursive-include examples *.py
+recursive-include tests *.py
